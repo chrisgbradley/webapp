@@ -1,14 +1,40 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React from "react";
 
-import * as routes from '../constants/routes';
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
 
-const Navigation = () => (
+import SignOutButton from "./SignOut";
+import * as routes from "../constants/routes";
+
+const Navigation = ( props, { authUser } ) => (
+	<div>
+		{ authUser
+			? <NavigationAuth/>
+			: <NavigationNonAuth/>
+		}
+	</div>
+);
+
+Navigation.contextTypes = {
+	authUser: PropTypes.object,
+};
+
+
+const NavigationAuth = () => (
     <div>
         <ul>
-            <li><Link to={routes.SIGN_IN}></Link></li>
-            <li><Link to={routes.LANDING}></Link></li>
-            <li><Link to={routes.DASHBOARD}></Link></li>
+	        <li><Link to={ routes.LANDING }>Home</Link></li>
+	        <li><Link to={ routes.DASHBOARD }>Dashboard</Link></li>
+	        <li><SignOutButton/></li>
         </ul>
     </div>
 );
+
+const NavigationNonAuth = () => (
+	<ul>
+		<li><Link to={ routes.LANDING }>Landing</Link></li>
+		<li><Link to={ routes.SIGN_IN }>Sign In</Link></li>
+	</ul>
+);
+
+export default Navigation;

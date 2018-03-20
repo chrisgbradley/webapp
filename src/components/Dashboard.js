@@ -1,4 +1,6 @@
-import React from 'react';
+import React from "react";
+
+import withAuthorization from "./hoc/withAuthorization";
 
 const DashboardPage = () => (
     <div>
@@ -6,4 +8,6 @@ const DashboardPage = () => (
     </div>
 );
 
-export default DashboardPage;
+const authCondition = ( authUser ) => !!authUser;
+
+export default withAuthorization( authCondition )( DashboardPage );

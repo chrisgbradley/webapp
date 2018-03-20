@@ -1,13 +1,15 @@
-import React from 'react';
-import {BrowserRouter as Router, Route} from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 
-import Navigation from './Navigation';
-import LandingPage from './Landing';
-import SignUpPage from './Signup';
-import SignInPage from './Signin';
-import DashboardPage from './Dashboard';
+import Navigation from "./Navigation";
+import LandingPage from "./Landing";
+import SignUpPage from "./SignUp";
+import SignInPage from "./SignIn";
+import DashboardPage from "./Dashboard";
 
-import * as routes from '../constants/routes';
+import * as routes from "../constants/routes";
+
+import withAuthentication from "./hoc/withAuthentication";
 
 const App = () => (
     <Router>
@@ -36,4 +38,4 @@ const App = () => (
     </Router>
 );
 
-export default App;
+export default withAuthentication( App );

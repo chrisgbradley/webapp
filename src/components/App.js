@@ -6,6 +6,7 @@ import LandingPage from "./Landing";
 import SignUpPage from "./SignUp";
 import SignInPage from "./SignIn";
 import DashboardPage from "./Dashboard";
+import HomePage from "./Home";
 
 import * as routes from "../constants/routes";
 
@@ -30,10 +31,14 @@ const App = () => (
                 exact path={routes.SIGN_IN}
                 component={() => <SignInPage/>}
             />
-            <Route
+	        <Route
                 exact path={routes.DASHBOARD}
                 component={() => <DashboardPage/>}
-            />
+	        />
+	        <Route
+		        exact path={ routes.HOME }
+		        component={ () => <HomePage/> }
+	        />
         </div>
     </Router>
 );

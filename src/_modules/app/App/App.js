@@ -3,7 +3,7 @@ import { Route, Router } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { history } from "../../../_helpers";
-import { HomePage } from "../";
+import { AuthPortal, HomePage } from "../";
 
 class App extends Component {
 	constructor ( props ) {
@@ -17,6 +17,7 @@ class App extends Component {
 			<div>
 				<Router history={ history }>
 					<div>
+						<AuthPortal history={ history }/>
 						<Route path="/" component={ HomePage }/>
 					</div>
 				</Router>

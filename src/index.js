@@ -1,8 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
-import App from "./components/App";
-import store from "./store";
+
+import { store } from "./_helpers";
+import { App } from "./_modules/app";
 import registerServiceWorker from "./registerServiceWorker";
 
 ReactDOM.render(

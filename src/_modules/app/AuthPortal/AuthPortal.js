@@ -7,6 +7,10 @@ const INITIAL_STATE = {
 	error: null,
 };
 
+const byPropKey = ( propertyName, value ) => () => ( {
+	[ propertyName ]: value,
+} );
+
 class AuthPortal extends Component {
 	handleGoogleSignIn = () => {
 		const { history } = this.props;
@@ -15,7 +19,9 @@ class AuthPortal extends Component {
 			.then( () => {
 				this.setState( () => ( { ...INITIAL_STATE } ) );
 				history.push( routes.HOME );
-			} );
+			} ).catch( error => {
+			this.setState( byPropKey( "error", error ) );
+		} );
 	};
 
 	constructor ( props ) {
@@ -30,7 +36,7 @@ class AuthPortal extends Component {
 
 		return (
 			<div>
-				<GoogleSignIn clicked={ this.handleGoogleSignIn.bind( this ) }/>
+				<GoogleSignIn clicked={ this.handleGoogleSignIn }/>
 				{ error && <p>{ error.message }</p> }
 			</div>
 		);
@@ -38,7 +44,7 @@ class AuthPortal extends Component {
 }
 
 export const GoogleSignIn = ( props ) => (
-	<button onClick={ props.clicked() }>Google - Sign In</button>
+	<button onClick={ props.clicked }>Google - Sign In</button>
 );
 
 export default AuthPortal;

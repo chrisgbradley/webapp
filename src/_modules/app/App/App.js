@@ -4,12 +4,13 @@ import { connect } from "react-redux";
 
 import { history } from "../../../_helpers";
 import { AuthPortal, HomePage } from "../";
+import { withAuthentication } from "../../components/hoc/";
 
 class App extends Component {
 	constructor ( props ) {
 		super( props );
 
-		const { dispatch } = this.props;
+		//const { dispatch } = this.props;
 	}
 
 	render () {
@@ -26,9 +27,9 @@ class App extends Component {
 	}
 }
 
-function mapStateToProps ( state ) {
-	return {};
-}
+// function mapStateToProps ( state ) {
+// 	return {};
+// }
 
-const connectedApp = connect( mapStateToProps )( App );
+const connectedApp = connect( mapStateToProps )( withAuthentication( App ) );
 export { connectedApp as App };

@@ -11,7 +11,18 @@ const withAuthentication = ( Component ) => {
 			firebase.auth.onAuthStateChanged( authUser => {
 				if ( authUser ) {
 					onSetAuthUser( authUser );
-					onSetUser( db.onceGetUser( authUser.uid ) );
+					db.onceGetCurrentUser( authUser.uid )
+						.then( user => {
+							if ( user ) {
+								onSetUser( user );
+							} else {
+								db.doCreateUser( authUser.uid, authUser.displayName, authUser.email )
+									.then( () => {
+										const user = db.onceGetCurrentUser( authUser.uid );
+										onSetUser( user );
+									} );
+							}
+						} );
 				} else {
 					onSetAuthUser( null );
 					onSetUser( null );

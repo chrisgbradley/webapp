@@ -3,7 +3,7 @@ import { Route, Router } from "react-router-dom";
 import { connect } from "react-redux";
 
 import { history } from "../../../_helpers";
-import { AuthPortal, HomePage, Layout } from "../";
+import { AuthPortal, Dashboard, HomePage, Layout } from "../";
 import { withAuthentication } from "../../components/hoc/";
 
 class App extends Component {
@@ -19,6 +19,7 @@ class App extends Component {
 				<Layout>
 					<Route exact path="/" component={ HomePage }/>
 					<Route path="/auth" component={ AuthPortal }/>
+					<Route path="/dashboard" component={ Dashboard }/>
 				</Layout>
 			</Router>
 		);

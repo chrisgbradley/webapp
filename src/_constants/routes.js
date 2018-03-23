@@ -1,3 +1,3 @@
 export const HOME = "/";
 export const DASHBOARD = "/dashboard";
-export const SIGN_OUT = "/signout";
+export const AUTH_PORTAL = "/auth";

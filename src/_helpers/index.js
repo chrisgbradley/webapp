@@ -5,5 +5,3 @@ import * as firebase from "./firebase";
 export {
 	db, auth, firebase
 };
-export * from "./history";
-export * from "./store";

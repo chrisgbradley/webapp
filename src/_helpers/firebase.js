@@ -1,4 +1,6 @@
-import * as firebase from "firebase";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 
 import { firebaseConfig } from "../secrets";
 
@@ -10,12 +12,10 @@ if ( !firebase.apps.length ) {
 	firebase.initializeApp( config );
 }
 
-const db = firebase.database();
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+const firebaseDb = firebase.database();
+const firebaseAuth = firebase.auth();
 
 export {
-	db,
-	auth,
-	provider,
+	firebaseDb,
+	firebaseAuth
 };

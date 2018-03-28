@@ -1,39 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "react-router-dom";
 
-import * as routes from "../../../_constants/routes";
+import classes from "./Header.css";
+import Navigation from "../Navigation";
 
-import Button from "../Button";
+const Header = ( { authenticated } ) => {
 
-const Header = ( { authenticated, signOut } ) => (
-	<header>
-		<ul>
-			<li><Link to={ routes.HOME }>Home</Link></li>
-			<li><Link to={ routes.DASHBOARD }>Dashboard</Link></li>
-			<li>
-				{
-					authenticated ?
-						<SignOutButton signOut={ signOut }/> :
-						<Link to={ routes.AUTH_PORTAL }>Sign in</Link>
-				}
-			</li>
-		</ul>
+	const attachedClasses = [
+		classes.Header,
+		"u-full-width",
+	];
 
-	</header>
-);
-
-Header.propTypes = {
-	authenticated: PropTypes.bool.isRequired,
-	signOut: PropTypes.func.isRequired
+	return (
+		<header className={ attachedClasses.join( " " ) }>
+			<Navigation authenticated={ authenticated }/>
+		</header>
+	);
 };
 
-const SignOutButton = ( { signOut } ) => (
-	<Button onClick={ signOut }>Sign out</Button>
-);
-
-SignOutButton.propTypes = {
-	signOut: PropTypes.func.isRequired
+Header.propTypes = {
+	authenticated: PropTypes.bool.isRequired
 };
 
 export default Header;

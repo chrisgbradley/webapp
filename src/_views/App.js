@@ -1,14 +1,13 @@
 import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Route, withRouter } from "react-router-dom";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 
 
 import * as routes from "../_constants/routes";
-import { authActions, getAuth } from "../_helpers/auth/index";
+import { getAuth } from "../_helpers/auth/index";
 //HOCs
 import RequireAuthRoute from "./components/RequireAuthRoute";
-import RequireUnauthRoute from "./components/RequireUnauthRoute";
 //Components
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -25,17 +24,24 @@ const App = ( { authenticated, signOut } ) => (
 			signOut={ signOut }
 		/>
 		<main>
-			<Route exact path={ routes.HOME } component={ HomePage }/>
-			<RequireAuthRoute authenticated={ authenticated } path={ routes.DASHBOARD } component={ Dashboard }/>
-			<RequireUnauthRoute authenticated={ authenticated } path={ routes.AUTH_PORTAL } component={ AuthPortal }/>
+			<Switch>
+				<Route exact path={ routes.HOME } component={ HomePage }/>
+				<RequireAuthRoute authenticated={ authenticated } path={ routes.DASHBOARD } component={ Dashboard }/>
+				<Route
+					path={ routes.AUTH_PORTAL }
+					render={ props =>
+						<AuthPortal authenticated={ authenticated } { ...props } />
+					}
+				/>
+				<Redirect to={ routes.HOME }/>
+			</Switch>
 		</main>
 		<Footer/>
 	</Fragment>
 );
 
 App.propTypes = {
-	authenticated: PropTypes.bool.isRequired,
-	signOut: PropTypes.func.isRequired
+	authenticated: PropTypes.bool.isRequired
 };
 
 /*----------------
@@ -44,13 +50,9 @@ App.propTypes = {
 
 const mapStateToProps = getAuth;
 
-const mapDispatchToProps = {
-	signOut: authActions.signOut
-};
 
 export default withRouter(
 	connect(
-		mapStateToProps,
-		mapDispatchToProps
+		mapStateToProps
 	)( App )
 );

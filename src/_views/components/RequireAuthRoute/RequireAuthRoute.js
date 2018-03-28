@@ -11,7 +11,7 @@ const RequireAuthRoute = ( { component: Component, authenticated, ...rest } ) =>
 				<Component { ...props } />
 			) : (
 				<Redirect to={ {
-					pathname: routes.AUTH_PORTAL,
+					pathname: `${routes.AUTH_PORTAL}/sign-in`,
 					state: { from: props.location }
 				} }/>
 			);

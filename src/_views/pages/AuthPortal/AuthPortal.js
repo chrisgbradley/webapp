@@ -1,42 +1,27 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { connect } from "react-redux";
-import { authActions } from "../../../_helpers/auth";
-import Button from "../../components/Button";
+import { Redirect, Route, Switch } from "react-router-dom";
+import * as routes from "../../../_constants/routes";
+import RequireUnauthRoute from "../../components/RequireUnauthRoute";
 
-const AuthPortal = ( { signInWithGoogle } ) => (
+import SignOut from "./SignOut";
+import SignIn from "./SignIn";
+
+const AuthPortal = ( { match, authenticated } ) => (
 	<div>
-		<SignInForm signInWithGoogle={ signInWithGoogle }/>
+		<Switch>
+			<RequireUnauthRoute authenticated={ authenticated } path={ `${match.url}/sign-in` } component={ SignIn }/>
+			<RequireUnauthRoute authenticated={ authenticated } path={ `${match.url}/sign-up` } component={ null }/>
+			<Route path={ `${match.url}/sign-out` } component={ SignOut }/>
+			<Redirect to={ routes.HOME }/>
+		</Switch>
 	</div>
 );
 
 AuthPortal.propTypes = {
-	signInWithGoogle: PropTypes.func.isRequired
+	authenticated: PropTypes.bool.isRequired
 };
 
 
-const SignInForm = ( { signInWithGoogle } ) => {
-	return (
-		<div>
-			<Button onClick={ signInWithGoogle }>Google</Button>
-		</div>
-	);
-};
-
-SignInForm.propTypes = {
-	signInWithGoogle: PropTypes.func.isRequired
-};
-
-/*----------------
-	CONNECT
- -----------------*/
-
-const mapDispatchToProps = {
-	signInWithGoogle: authActions.signInWithGoogle,
-};
-
-export default connect(
-	null,
-	mapDispatchToProps
-)( AuthPortal );
+export default AuthPortal;
 

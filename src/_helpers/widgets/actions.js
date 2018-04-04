@@ -1,4 +1,4 @@
-import { widgetList } from "widgetList";
+import { widgetList } from "./widgetList";
 import {
 	CREATE_WIDGET_ERROR,
 	CREATE_WIDGET_SUCCESS,
@@ -76,7 +76,7 @@ export function updateWidgetError ( error ) {
 export function loadWidgets () {
 	return ( dispatch, getState ) => {
 		const { auth } = getState();
-		widgetList.path = `widgets/${auth.uid}`;
+		widgetList.path = `widgets/${auth.id}`;
 		widgetList.subscribe( dispatch );
 	};
 }
@@ -84,7 +84,7 @@ export function loadWidgets () {
 export function loadWidgetsSuccess ( widgets ) {
 	return {
 		type: LOAD_WIDGETS_SUCCESS,
-		payload: tasks
+		payload: widgets
 	};
 }
 

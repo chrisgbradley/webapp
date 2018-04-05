@@ -17,15 +17,19 @@ export class Dashboard extends Component {
 	static propTypes = {
 		createWidget: PropTypes.func.isRequired,
 		loadWidgets: PropTypes.func.isRequired,
+		removeWidget: PropTypes.func.isRequired,
 		widgets: PropTypes.instanceOf( List ).isRequired,
 		unloadWidgets: PropTypes.func.isRequired,
 		updateWidget: PropTypes.func.isRequired,
 		history: PropTypes.object.isRequired
 	};
 
-	CURRENT_URL = this.props.match.url;
+	constructor ( props ) {
+		super( props );
+		this._loadableWidgets = widgets;
+	}
 
-	_loadableWidgets = Object.values( widgets );
+	CURRENT_URL = this.props.match.url;
 
 	componentWillMount () {
 		this.props.loadWidgets();
@@ -35,15 +39,31 @@ export class Dashboard extends Component {
 		this.props.unloadWidgets();
 	}
 
+	getWidget ( id ) {
+		switch ( id ) {
+			case widgets.HelloWorld.uniqueId:
+				return widgets.HelloWorld;
+
+			default:
+				return null;
+		}
+	}
+
 	handleNewWidgetClicked () {
 		return this.props.history.push( `${this.CURRENT_URL}/new-widget` );
 	}
 
-	handleCreateWidget ( { title, data } ) {
-		console.log( "Creating widget..." );
-		console.log( title, data );
-		this.props.createWidget( title, data );
+	handleCreateWidget ( { title, data, widgetId } ) {
+		this.props.createWidget( title, data, widgetId );
 		this.closeCreator();
+	}
+
+	handleWidgetModify ( event ) {
+		return console.log( "modify", event.target.id );
+	}
+
+	handleWidgetRemove ( event ) {
+		return console.log( "remove", event.target.id );
 	}
 
 	closeCreator () {
@@ -58,16 +78,20 @@ export class Dashboard extends Component {
 					<Switch>
 						<Route path={ `${this.CURRENT_URL}/new-widget` } render={ props => (
 							<WidgetCreator
+								getWidget={ this.getWidget.bind( this ) }
 								handleSubmit={ this.handleCreateWidget.bind( this ) }
 								handleCloseCreator={ this.closeCreator.bind( this ) }
-								widgetOptions={ this._loadableWidgets.map( widget => widget.card ) }
+								loadableWidgets={ this._loadableWidgets }
 								{ ...props }
 							/>
 						) }/>
 						<Route path="/" render={ props => (
 							<WidgetList
+								getWidget={ this.getWidget.bind( this ) }
+								handleSettingsEdit={ this.handleWidgetModify.bind( this ) }
+								handleSettingsRemove={ this.handleWidgetRemove.bind( this ) }
 								handleNewWidgetClicked={ this.handleNewWidgetClicked.bind( this ) }
-								widgetComponents={ this._loadableWidgets.map( widget => widget.Component ) }
+								loadableWidgets={ this._loadableWidgets }
 								widgets={ this.props.widgets }
 								{ ...props }
 							/>

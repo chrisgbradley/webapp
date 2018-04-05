@@ -16,7 +16,6 @@ SignIn.propTypes = {
 };
 
 const mapDispatchToProps = {
-	//todo: refactor to use User model for authentication
 	signInWithGoogle: authActions.signInWithGoogle,
 };
 

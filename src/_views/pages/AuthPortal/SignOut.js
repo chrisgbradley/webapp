@@ -13,7 +13,6 @@ class SignOut extends React.Component {
 }
 
 const mapDispatchToProps = {
-	//todo: refactor to use User model for deauth
 	signOut: authActions.signOut
 };
 

@@ -1,26 +1,29 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 
 import WidgetPicker from "../WidgetPicker";
 import WidgetBuilderLayout from "../WidgetBuilderLayout";
 
-import * as widgets from "../../widgets";
-
 
 class WidgetCreator extends Component {
+	static propTypes = {
+		loadableWidgets: PropTypes.object.isRequired,
+		getWidget: PropTypes.func.isRequired,
+		handleCloseCreator: PropTypes.func.isRequired,
+		handleSubmit: PropTypes.func.isRequired,
+	};
+
 	state = {
 		selection: null,
 	};
 
-	widgetOptions = Object.values( widgets ).map( widget => widget.card );
-
+	widgetOptions = Object.values( this.props.loadableWidgets ).map( widget => ( {
+		id: widget.uniqueId,
+		card: widget.card
+	} ) );
 	handleSelectionMade ( event ) {
-		switch ( event.target.id ) {
-			case "hello":
-				return this.setState( { selection: widgets.HelloWorld } );
-
-			default:
-				return null;
-		}
+		const widget = this.props.getWidget( event.target.id );
+		return this.setState( { selection: widget } );
 	}
 
 	handleBackToSelection () {
@@ -32,6 +35,7 @@ class WidgetCreator extends Component {
 			<WidgetBuilderLayout
 				handleBackToSelection={ this.handleBackToSelection.bind( this ) }
 				handleCloseCreator={ this.props.handleCloseCreator }
+				widgetId={ this.state.selection.uniqueId }
 				BuilderForm={ this.state.selection.BuilderComponent }
 				handleSubmit={ this.props.handleSubmit }
 			/>
@@ -48,7 +52,7 @@ class WidgetCreator extends Component {
 					<WidgetPicker
 						handleWidgetClicked={ this.handleSelectionMade.bind( this ) }
 						handleCloseCreator={ this.props.handleCloseCreator }
-						widgetCards={ this.props.widgetOptions }/>
+						widgetOptions={ this.widgetOptions }/>
 				}
 			</div>
 		);

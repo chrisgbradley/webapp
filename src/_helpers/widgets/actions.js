@@ -10,9 +10,9 @@ import {
 	UPDATE_WIDGET_SUCCESS
 } from "./actionTypes";
 
-export function createWidget ( title, data ) {
+export function createWidget ( title, data, widgetId ) {
 	return dispatch => {
-		widgetList.push( { title, data } )
+		widgetList.push( { title, data, widgetId } )
 			.catch( error => dispatch( createWidgetError( error ) ) );
 	};
 }

@@ -4,7 +4,7 @@ import { Field } from "redux-form";
 const Builder = () => (
 	<Fragment>
 		<div>
-			<Field name="extra-message" component="input" type="text"/>
+			<Field name="extraMessage" component="input" type="text"/>
 		</div>
 	</Fragment>
 );

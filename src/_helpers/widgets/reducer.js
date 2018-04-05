@@ -16,7 +16,7 @@ export function widgetsReducer ( state = new WidgetsState(), { payload, type } )
 	switch ( type ) {
 		case CREATE_WIDGET_SUCCESS:
 			return state.merge( {
-				list: state.list.unshift( payload )
+				list: state.list.push( payload )
 			} );
 		case REMOVE_WIDGET_SUCCESS:
 			return state.merge( {

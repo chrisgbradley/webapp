@@ -1,16 +1,18 @@
 import React, { Component } from "react";
-import { List } from "immutable";
+import Immutable, { List } from "immutable";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-import { Redirect, Route, Switch } from "react-router-dom";
 import { createSelector } from "reselect";
 
 import { getWidgetsList, widgetActions } from "../../../_helpers/widgets";
 import WidgetList from "../../components/WidgetList";
 import WidgetCreator from "../../components/WidgetCreator";
 
+import * as classes from "./Dashboard.css";
 
-import * as widgets from "../../widgets";
+import * as WIDGET_MODULES from "../../widgets";
+import Modal from "../../components/Modal";
+import WidgetEditor from "../../components/WidgetEditor";
 
 
 export class Dashboard extends Component {
@@ -26,79 +28,100 @@ export class Dashboard extends Component {
 
 	constructor ( props ) {
 		super( props );
-		this._loadableWidgets = widgets;
-	}
 
-	CURRENT_URL = this.props.match.url;
+		this.state = {
+			creatingWidget: false,
+			editingWidget: null,
+		};
+
+		this._loadableWidgets = WIDGET_MODULES;
+
+	}
 
 	componentWillMount () {
 		this.props.loadWidgets();
+	}
+
+	componentDidUpdate () {
+		this._widgetsMap = this.props.widgets.reduce(
+			function ( result, item ) { return result.set( item.get( "key" ), item ); },
+			Immutable.Map() );
 	}
 
 	componentWillUnmount () {
 		this.props.unloadWidgets();
 	}
 
-	getWidget ( id ) {
+	getWidgetModule ( id ) {
 		switch ( id ) {
-			case widgets.HelloWorld.uniqueId:
-				return widgets.HelloWorld;
+			case this._loadableWidgets.HelloWorld.uniqueId:
+				return this._loadableWidgets.HelloWorld;
 
 			default:
 				return null;
 		}
 	}
 
+	getWidgetFromList () {
+
+	}
+
 	handleNewWidgetClicked () {
-		return this.props.history.push( `${this.CURRENT_URL}/new-widget` );
+		return this.setState( { creatingWidget: true } );
+	}
+
+	handleEditWidgetClicked ( widgetKey ) {
+		const widget = this._widgetsMap.find( widget => widget.get( "key" ) === widgetKey ).toJS();
+		return this.setState( { editingWidget: widget } );
 	}
 
 	handleCreateWidget ( { title, data, widgetId } ) {
 		this.props.createWidget( title, data, widgetId );
-		this.closeCreator();
+		return this.backToDashboard();
 	}
 
-	handleWidgetModify ( event ) {
-		return console.log( "modify", event.target.id );
+	handleEditWidget ( widget ) {
+		this.props.updateWidget( widget );
+		return this.backToDashboard();
 	}
 
-	handleWidgetRemove ( event ) {
-		return console.log( "remove", event.target.id );
+	handleWidgetRemove ( widgetKey ) {
+		return this.props.removeWidget( widgetKey );
 	}
 
-	closeCreator () {
-		return this.props.history.push( "/dashboard" );
+	backToDashboard () {
+		return this.setState( {
+			creatingWidget: false,
+			editingWidget: null,
+		} );
 	}
 
 	render () {
 		return (
-			<div>
-				<h1>Dashboard</h1>
-				<div>
-					<Switch>
-						<Route path={ `${this.CURRENT_URL}/new-widget` } render={ props => (
-							<WidgetCreator
-								getWidget={ this.getWidget.bind( this ) }
-								handleSubmit={ this.handleCreateWidget.bind( this ) }
-								handleCloseCreator={ this.closeCreator.bind( this ) }
-								loadableWidgets={ this._loadableWidgets }
-								{ ...props }
-							/>
-						) }/>
-						<Route path="/" render={ props => (
-							<WidgetList
-								getWidget={ this.getWidget.bind( this ) }
-								handleSettingsEdit={ this.handleWidgetModify.bind( this ) }
-								handleSettingsRemove={ this.handleWidgetRemove.bind( this ) }
-								handleNewWidgetClicked={ this.handleNewWidgetClicked.bind( this ) }
-								loadableWidgets={ this._loadableWidgets }
-								widgets={ this.props.widgets }
-								{ ...props }
-							/>
-						) }/>
-						<Redirect to="/"/>
-					</Switch>
-				</div>
+			<div className={ classes.Dashboard }>
+				{ this.state.creatingWidget ? ( <Modal show={ this.state.creatingWidget }>
+					<WidgetCreator
+						getWidget={ this.getWidgetModule.bind( this ) }
+						handleSubmit={ this.handleCreateWidget.bind( this ) }
+						handleClose={ this.backToDashboard.bind( this ) }
+						loadableWidgets={ this._loadableWidgets }
+					/>
+				</Modal> ) : null }
+				{ !!this.state.editingWidget ? ( <Modal show={ !!this.state.editingWidget }>
+					<WidgetEditor
+						widget={ this.state.editingWidget }
+						handleSubmit={ this.handleEditWidget.bind( this ) }
+						handleClose={ this.backToDashboard.bind( this ) }
+						BuilderForm={ this.getWidgetModule( this.state.editingWidget.widgetId ).BuilderComponent }
+					/>
+				</Modal> ) : null }
+				<WidgetList
+					getWidget={ this.getWidgetModule.bind( this ) }
+					handleSettingsEdit={ this.handleEditWidgetClicked.bind( this ) }
+					handleSettingsRemove={ this.handleWidgetRemove.bind( this ) }
+					handleNewWidgetClicked={ this.handleNewWidgetClicked.bind( this ) }
+					loadableWidgets={ this._loadableWidgets }
+					widgets={ this.props.widgets }/>
 			</div>
 		);
 	}

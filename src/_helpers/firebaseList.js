@@ -25,7 +25,7 @@ export class FirebaseList {
 	remove ( key ) {
 		return new Promise( ( resolve, reject ) => {
 			firebaseDb.ref( `${this._path}/${key}` )
-				.remove( key, error => error ? reject( error ) : resolve() );
+				.remove( error => error ? reject( error ) : resolve() );
 		} );
 	}
 

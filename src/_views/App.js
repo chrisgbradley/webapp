@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
@@ -16,9 +16,10 @@ import HomePage from "./pages/Home";
 import AuthPortal from "./pages/AuthPortal";
 import Dashboard from "./pages/Dashboard";
 
+import * as classes from "./App.css";
 
 const App = ( { authenticated, signOut } ) => (
-	<Fragment>
+	<div className={ classes.App }>
 		<Header
 			authenticated={ authenticated }
 			signOut={ signOut }
@@ -37,7 +38,7 @@ const App = ( { authenticated, signOut } ) => (
 			</Switch>
 		</main>
 		<Footer/>
-	</Fragment>
+	</div>
 );
 
 App.propTypes = {

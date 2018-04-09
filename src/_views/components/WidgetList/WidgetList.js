@@ -1,9 +1,12 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { List } from "immutable";
 
+import * as classes from "./WidgetList.css";
+
 import Button from "../Button";
 import WidgetFrame from "../WidgetFrame";
+import WidgetControlsWrapper from "../WidgetControlsWrapper/";
 
 
 function WidgetList ( { loadableWidgets, widgets, handleNewWidgetClicked, handleSettingsEdit, handleSettingsRemove, getWidget } ) {
@@ -18,18 +21,21 @@ function WidgetList ( { loadableWidgets, widgets, handleNewWidgetClicked, handle
 				Component={ handleComponentType( widget.widgetId ) }
 				title={ widget.title }
 				data={ widget.data }
-				settingsEdit={ handleSettingsEdit }
-				settingsRemove={ handleSettingsRemove }
+				settingsEdit={ () => handleSettingsEdit( widget.key ) }
+				settingsRemove={ () => handleSettingsRemove( widget.key ) }
 			/>
 		);
 	} );
 
 	return (
-		<div>
-			<h2>WidgetList</h2>
-			{ widgetItems }
-			<Button onClick={ handleNewWidgetClicked }>New Widget</Button>
-		</div>
+		<Fragment>
+			<WidgetControlsWrapper>
+				<Button className={ classes.NewWidgetButton } onClick={ handleNewWidgetClicked }>New Widget</Button>
+			</WidgetControlsWrapper>
+			<div className={ classes.WidgetContainer }>
+				{ widgetItems }
+			</div>
+		</Fragment>
 	);
 }
 

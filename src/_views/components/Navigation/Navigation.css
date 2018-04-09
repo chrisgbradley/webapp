@@ -1,0 +1,25 @@
+.Navigation {
+}
+
+ul {
+	list-style-type: none;
+	margin:          0;
+}
+
+li {
+	display: inline-block;
+	margin:  0;
+}
+
+li a {
+	display:         block;
+	text-decoration: none;
+	padding:         20px 30px;
+	color:           white;
+	font-weight:     bold;
+}
+
+li a:hover {
+	color:            #2E5073;
+	background-color: white;
+}

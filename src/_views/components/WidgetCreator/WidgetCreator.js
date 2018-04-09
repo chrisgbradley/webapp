@@ -7,15 +7,20 @@ import WidgetBuilderLayout from "../WidgetBuilderLayout";
 
 class WidgetCreator extends Component {
 	static propTypes = {
-		loadableWidgets: PropTypes.object.isRequired,
+		loadableWidgets: PropTypes.object,
 		getWidget: PropTypes.func.isRequired,
-		handleCloseCreator: PropTypes.func.isRequired,
+		handleClose: PropTypes.func.isRequired,
 		handleSubmit: PropTypes.func.isRequired,
 	};
 
-	state = {
-		selection: null,
-	};
+	constructor ( props ) {
+		super( props );
+
+		this.state = {
+			selection: null,
+
+		};
+	}
 
 	widgetOptions = Object.values( this.props.loadableWidgets ).map( widget => ( {
 		id: widget.uniqueId,
@@ -30,28 +35,21 @@ class WidgetCreator extends Component {
 		return this.setState( { selection: null } );
 	}
 
-	renderBuilderComponent () {
-		return (
-			<WidgetBuilderLayout
-				handleBackToSelection={ this.handleBackToSelection.bind( this ) }
-				handleCloseCreator={ this.props.handleCloseCreator }
-				widgetId={ this.state.selection.uniqueId }
-				BuilderForm={ this.state.selection.BuilderComponent }
-				handleSubmit={ this.props.handleSubmit }
-			/>
-		);
-	}
-
 	render () {
 		return (
 			<div>
-				<h2>Widget Creator</h2>
 				{ this.state.selection ?
-					this.renderBuilderComponent()
+					<WidgetBuilderLayout
+						handleBackToSelection={ this.handleBackToSelection.bind( this ) }
+						handleClose={ this.props.handleClose }
+						widgetId={ this.state.selection.uniqueId }
+						BuilderForm={ this.state.selection.BuilderComponent }
+						handleSubmit={ this.props.handleSubmit }
+					/>
 					:
 					<WidgetPicker
 						handleWidgetClicked={ this.handleSelectionMade.bind( this ) }
-						handleCloseCreator={ this.props.handleCloseCreator }
+						handleClose={ this.props.handleClose }
 						widgetOptions={ this.widgetOptions }/>
 				}
 			</div>

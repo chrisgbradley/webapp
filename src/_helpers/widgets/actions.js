@@ -31,9 +31,9 @@ export function createWidgetError ( error ) {
 	};
 }
 
-export function removeWidget ( widget ) {
+export function removeWidget ( widgetKey ) {
 	return dispatch => {
-		widgetList.remove( widget.key )
+		widgetList.remove( widgetKey )
 			.catch( error => dispatch( removeWidgetError( error ) ) );
 	};
 }
@@ -54,7 +54,7 @@ export function removeWidgetError ( error ) {
 
 export function updateWidget ( widget ) {
 	return dispatch => {
-		widgetList.update( widget )
+		widgetList.update( widget.key, widget )
 			.catch( error => dispatch( updateWidgetError( error ) ) );
 	};
 }

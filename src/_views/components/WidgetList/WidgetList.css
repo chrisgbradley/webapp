@@ -1,0 +1,10 @@
+.WidgetList {
+}
+
+.WidgetContainer {
+	display: flex;
+}
+
+.NewWidgetButton {
+	margin-left: 5px;
+}

@@ -2,17 +2,24 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import * as routes from "../../../_constants/routes";
+import * as classes from "./Navigation.css";
 
-const Navigation = ( { authenticated } ) => (
-	<nav>
-		<ul>
-			<NavItem link={ routes.HOME }>Home</NavItem>
-			{ authenticated ? <NavItem link={ routes.DASHBOARD }>Dashboard</NavItem> : null }
-			{ authenticated ? <NavItem link={ `${routes.AUTH_PORTAL}/sign-out` }>Sign out</NavItem> : null }
-			{ authenticated ? null : <NavItem link={ `${routes.AUTH_PORTAL}/sign-in` }>Sign in</NavItem> }
-		</ul>
-	</nav>
-);
+const Navigation = ( { authenticated } ) => {
+	const attachedClasses = [
+		classes.Navigation,
+		"u-pull-right"
+	];
+	return (
+		<nav className={ attachedClasses.join( " " ) }>
+			<ul>
+				<NavItem link={ routes.HOME }>Home</NavItem>
+				{ authenticated ? <NavItem link={ routes.DASHBOARD }>Dashboard</NavItem> : null }
+				{ authenticated ? <NavItem link={ `${routes.AUTH_PORTAL}/sign-out` }>Sign out</NavItem> : null }
+				{ authenticated ? null : <NavItem link={ `${routes.AUTH_PORTAL}/sign-in` }>Sign in</NavItem> }
+			</ul>
+		</nav>
+	);
+};
 
 Navigation.propTypes = {
 	authenticated: PropTypes.bool.isRequired

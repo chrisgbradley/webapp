@@ -8,12 +8,12 @@ const Header = ( { authenticated } ) => {
 
 	const attachedClasses = [
 		classes.Header,
-		"u-full-width",
 	];
 
 	return (
 		<header className={ attachedClasses.join( " " ) }>
 			<Navigation authenticated={ authenticated }/>
+			<div className="u-cf"></div>
 		</header>
 	);
 };

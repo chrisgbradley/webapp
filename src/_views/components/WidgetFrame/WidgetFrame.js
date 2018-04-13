@@ -1,10 +1,10 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
-import * as classes from "./WidgetFrame.css";
-
-import Modal from "../Modal";
 import Button from "../Button";
+import Icon from "../icon";
+
+import "./widget-frame.css";
 
 class WidgetFrame extends Component {
 
@@ -40,24 +40,32 @@ class WidgetFrame extends Component {
 		const { settingsOpen } = this.state;
 		const { Component, title, data, settingsEdit, settingsRemove } = this.props;
 
-		const attachedClasses = [
-			classes.WidgetFrame,
-			settingsOpen ? classes.SettingsPane : null
-		];
 
 		//todo: add modalHOC around settingsPane and pass show prop to modal using state
 		//todo: remove ternary expression in favor of passing logic to modal
 		return (
-			<div className={ attachedClasses.join( " " ) }>
-				<Modal show={ settingsOpen } classes={ classes.SettingsPane }>
-					<SettingsPane
-						handleEdit={ () => this.closeSettingsOnCall( settingsEdit ) }
-						handleRemove={ () => this.closeSettingsOnCall( settingsRemove ) }
-						handleClose={ this.handleSettingsPane.bind( this ) }
-					/>
-				</Modal>
-				<Component title={ title } data={ data }/>
-				<Button onClick={ this.handleSettingsPane } /* styles={} */>Settings</Button>
+			<div className="w-list-item-frame w-size-2-by-3">
+				{
+					settingsOpen ?
+						(
+							<SettingsPane
+								handleEdit={ () => this.closeSettingsOnCall( settingsEdit ) }
+								handleRemove={ () => this.closeSettingsOnCall( settingsRemove ) }
+								handleClose={ this.handleSettingsPane.bind( this ) }
+							/>
+						)
+						:
+						(
+							<Fragment>
+								<div className="w-content">
+									<Component title={ title } data={ data }/>
+								</div>
+								<Button onClick={ this.handleSettingsPane } className="settings-btn u-pull-right">
+									<Icon name="edit"/>
+								</Button>
+							</Fragment>
+						)
+				}
 			</div>
 		);
 	}
@@ -66,11 +74,11 @@ class WidgetFrame extends Component {
 function SettingsPane ( { handleEdit, handleRemove, handleClose } ) {
 
 	return (
-		<Fragment>
+		<div className="w-settings-pane">
 			<Button onClick={ handleEdit }>Edit</Button>
 			<Button onClick={ handleRemove }>Remove</Button>
 			<Button onClick={ handleClose }>Close</Button>
-		</Fragment>
+		</div>
 	);
 }
 

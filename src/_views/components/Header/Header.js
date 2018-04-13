@@ -1,20 +1,16 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
-import classes from "./Header.css";
 import Navigation from "../Navigation";
+
 
 const Header = ( { authenticated } ) => {
 
-	const attachedClasses = [
-		classes.Header,
-	];
-
 	return (
-		<header className={ attachedClasses.join( " " ) }>
+		<Fragment>
 			<Navigation authenticated={ authenticated }/>
-			<div className="u-cf"></div>
-		</header>
+		</Fragment>
+
 	);
 };
 

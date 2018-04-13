@@ -2,11 +2,12 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { List } from "immutable";
 
-import * as classes from "./WidgetList.css";
-
 import Button from "../Button";
 import WidgetFrame from "../WidgetFrame";
 import WidgetControlsWrapper from "../WidgetControlsWrapper/";
+
+import "./widget-list.css";
+import Icon from "../icon";
 
 
 function WidgetList ( { loadableWidgets, widgets, handleNewWidgetClicked, handleSettingsEdit, handleSettingsRemove, getWidget } ) {
@@ -30,9 +31,9 @@ function WidgetList ( { loadableWidgets, widgets, handleNewWidgetClicked, handle
 	return (
 		<Fragment>
 			<WidgetControlsWrapper>
-				<Button className={ classes.NewWidgetButton } onClick={ handleNewWidgetClicked }>New Widget</Button>
+				<Button className="right-control" onClick={ handleNewWidgetClicked }><Icon name="add"/> New Widget</Button>
 			</WidgetControlsWrapper>
-			<div className={ classes.WidgetContainer }>
+			<div className="w-list-wrapper">
 				{ widgetItems }
 			</div>
 		</Fragment>

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
@@ -9,22 +9,24 @@ import { getAuth } from "../_helpers/auth/index";
 //HOCs
 import RequireAuthRoute from "./components/RequireAuthRoute";
 //Components
-import Header from "./components/Header";
-import Footer from "./components/Footer";
+import { default as HeaderContent } from "./components/Header";
+import { default as FooterContent } from "./components/Footer";
 //Pages
 import HomePage from "./pages/Home";
 import AuthPortal from "./pages/AuthPortal";
 import Dashboard from "./pages/Dashboard";
 
-import * as classes from "./App.css";
 
 const App = ( { authenticated, signOut } ) => (
-	<div className={ classes.App }>
-		<Header
-			authenticated={ authenticated }
-			signOut={ signOut }
-		/>
-		<main>
+	<Fragment>
+		<header id="app-header" className="u-cf ">
+			<HeaderContent
+				authenticated={ authenticated }
+				signOut={ signOut }
+			/>
+		</header>
+
+		<main id="app-content">
 			<Switch>
 				<Route exact path={ routes.HOME } component={ HomePage }/>
 				<RequireAuthRoute authenticated={ authenticated } path={ routes.DASHBOARD } component={ Dashboard }/>
@@ -37,8 +39,13 @@ const App = ( { authenticated, signOut } ) => (
 				<Redirect to={ routes.HOME }/>
 			</Switch>
 		</main>
-		<Footer/>
-	</div>
+		<footer id="app-footer" className="">
+			<div className="container u-cf">
+				<FooterContent/>
+			</div>
+		</footer>
+
+	</Fragment>
 );
 
 App.propTypes = {

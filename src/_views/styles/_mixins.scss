@@ -1,0 +1,40 @@
+@mixin for-phone-only {
+  @media (max-width: 599px) { @content; }
+}
+
+@mixin for-tablet-portrait-up {
+  @media (min-width: 600px) { @content; }
+}
+
+@mixin for-tablet-landscape-up {
+  @media (min-width: 900px) { @content; }
+}
+
+@mixin for-desktop-up {
+  @media (min-width: 1200px) { @content; }
+}
+
+@mixin for-big-desktop-up {
+  @media (min-width: 1800px) { @content; }
+}
+
+@mixin onHover( $color ) {
+  &:hover {
+    color: $color;
+  }
+}
+
+//todo: create a minimum ratio
+//todo: determine if convert to use only what is used is practical.
+@mixin frame-sizes( $standard-unit, $margin-offset ) {
+  $max-units-high: 12;
+  $max-units-wide: 12;
+  @for $units-high from 2 through $max-units-high {
+    @for $units-wide from 3 through $max-units-wide {
+      .w-size-#{$units-high}-by-#{$units-wide} {
+        height: $units-high * $standard-unit - ( $margin-offset * 2 );
+        width:  $units-wide * $standard-unit - ( $margin-offset * 2 );
+      }
+    }
+  }
+}

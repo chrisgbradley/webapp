@@ -1,0 +1,45 @@
+@import '_views/styles/shared';
+
+$frame-margin: 5px;
+
+.w-list-item-frame {
+  position:       relative;
+  word-wrap:      break-word;
+  border:         1px solid rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 2px 2px 0 rgba( 0, 0, 0, 0.2);
+  border-radius:  10px;
+  margin:         $frame-margin;
+  padding:        10px;
+  display:        flex;
+  flex-direction: column;
+  transition:     all 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.3);
+  }
+
+  & .w-content {
+    flex: 1 0 auto;
+  }
+  & .settings-btn {
+    transition: all 0.2s ease-in-out;
+    color:      rgba(0, 0, 0, 0.4);
+    &:hover {
+      color:  rgba(0, 0, 0, 0.8);
+      cursor: pointer;
+    }
+  }
+}
+
+.w-settings-pane {
+  width:          100%;
+  height:         100%;
+  display:        flex;
+  flex-direction: column;
+
+  & .btn {
+    flex: 1 0 auto;
+  }
+}
+
+@include frame-sizes(64px, $frame-margin);

@@ -3,11 +3,15 @@ import { Field, FormSection, reduxForm } from "redux-form";
 import Button from "../Button";
 import WidgetControlsWrapper from "../WidgetControlsWrapper/";
 
+import "./form.css";
+import Icon from "../icon";
+
 const WidgetBuilderLayout = ( { widgetData = null, handleBackToSelection = null, handleClose, BuilderForm, widgetId, handleSubmit } ) => (
 	<div>
 		<WidgetControlsWrapper>
-			{ !!handleBackToSelection ? <Button onClick={ handleBackToSelection }>Back</Button> : null }
-			<Button onClick={ handleClose }>Cancel</Button>
+			{ !!handleBackToSelection ? <Button className="left-control" onClick={ handleBackToSelection }><Icon
+				name="keyboard_arrow_left"/> Back</Button> : null }
+			<Button className="right-control" onClick={ handleClose }>Cancel <Icon name="close"/></Button>
 		</WidgetControlsWrapper>
 
 		<WidgetForm
@@ -33,16 +37,19 @@ class WidgetForm extends React.Component {
 		const { widgetId, handleSubmit, onSubmit } = this.props;
 		return (
 			<Fragment>
-				<form onSubmit={ handleSubmit( data => onSubmit( { ...data, widgetId } ) ) }>
+				<form className="w-form" onSubmit={ handleSubmit( data => onSubmit( { ...data, widgetId } ) ) }>
 					<div>
-						<label htmlFor="title">Title</label>
-						<Field name="title" component="input" type="text"
+						<Field name="title"
+						       autoFocus={ true }
+						       component="input"
+						       type="text"
+						       placeholder="Widget Name"
 						       value={ !!this.props.widgetData ? this.props.widgetData.title : "" }/>
 					</div>
 					<FormSection name="data">
 						{ this.renderBuilderForm( this.props.BuilderForm, this.props.widgetData ) }
 					</FormSection>
-					<Button type="submit">Save Widget</Button>
+					<Button type="submit"><Icon name="done"/> Save Widget</Button>
 				</form>
 			</Fragment>
 		);

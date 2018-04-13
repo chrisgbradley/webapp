@@ -1,10 +1,15 @@
-import React from "react";
+import React, { Fragment } from "react";
 
-import * as classes from "./Footer.css";
-
-const Footer = ( props ) => (
-	<footer className={ classes.Footer }>footer</footer>
-);
+const Footer = ( props ) => {
+	return (
+		<Fragment>
+			<div className="u-pull-left">widget webapp</div>
+			<div className="u-pull-right">
+				<small>created by c. bradley</small>
+			</div>
+		</Fragment>
+	);
+};
 
 export default Footer;
 

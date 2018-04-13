@@ -8,10 +8,7 @@ import { getWidgetsList, widgetActions } from "../../../_helpers/widgets";
 import WidgetList from "../../components/WidgetList";
 import WidgetCreator from "../../components/WidgetCreator";
 
-import * as classes from "./Dashboard.css";
-
 import * as WIDGET_MODULES from "../../widgets";
-import Modal from "../../components/Modal";
 import WidgetEditor from "../../components/WidgetEditor";
 
 
@@ -97,24 +94,31 @@ export class Dashboard extends Component {
 	}
 
 	render () {
-		return (
-			<div className={ classes.Dashboard }>
-				{ this.state.creatingWidget ? ( <Modal show={ this.state.creatingWidget }>
+		const creating = this.state.creatingWidget;
+		const editing = this.state.editingWidget;
+
+		const renderContent = () => {
+			if ( creating ) {
+				return (
 					<WidgetCreator
 						getWidget={ this.getWidgetModule.bind( this ) }
 						handleSubmit={ this.handleCreateWidget.bind( this ) }
 						handleClose={ this.backToDashboard.bind( this ) }
 						loadableWidgets={ this._loadableWidgets }
 					/>
-				</Modal> ) : null }
-				{ !!this.state.editingWidget ? ( <Modal show={ !!this.state.editingWidget }>
+				)
+			} else if ( !!editing ) {
+				return (
 					<WidgetEditor
-						widget={ this.state.editingWidget }
+						widget={ editing }
 						handleSubmit={ this.handleEditWidget.bind( this ) }
 						handleClose={ this.backToDashboard.bind( this ) }
-						BuilderForm={ this.getWidgetModule( this.state.editingWidget.widgetId ).BuilderComponent }
+						BuilderForm={ this.getWidgetModule( editing.widgetId ).BuilderComponent }
 					/>
-				</Modal> ) : null }
+				)
+			}
+
+			return (
 				<WidgetList
 					getWidget={ this.getWidgetModule.bind( this ) }
 					handleSettingsEdit={ this.handleEditWidgetClicked.bind( this ) }
@@ -122,6 +126,12 @@ export class Dashboard extends Component {
 					handleNewWidgetClicked={ this.handleNewWidgetClicked.bind( this ) }
 					loadableWidgets={ this._loadableWidgets }
 					widgets={ this.props.widgets }/>
+			)
+		};
+
+		return (
+			<div className="container">
+				{ renderContent() }
 			</div>
 		);
 	}

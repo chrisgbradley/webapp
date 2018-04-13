@@ -1,9 +1,9 @@
 import React from "react";
 
-import * as classes from "./WidgetControlsWrapper.css";
+import "./dash-control.css";
 
 const WidgetControlsWrapper = ( { children } ) => (
-	<div className={ classes.WidgetControlsWrapper }>
+	<div className="w-dash-controls u-cf">
 		{ children }
 	</div>
 );

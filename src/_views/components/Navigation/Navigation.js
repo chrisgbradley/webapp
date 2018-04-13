@@ -2,16 +2,13 @@ import React from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 import * as routes from "../../../_constants/routes";
-import * as classes from "./Navigation.css";
+
+import "./nav.css";
 
 const Navigation = ( { authenticated } ) => {
-	const attachedClasses = [
-		classes.Navigation,
-		"u-pull-right"
-	];
 	return (
-		<nav className={ attachedClasses.join( " " ) }>
-			<ul>
+		<nav className="main-nav u-pull-right">
+			<ul className="nav-list">
 				<NavItem link={ routes.HOME }>Home</NavItem>
 				{ authenticated ? <NavItem link={ routes.DASHBOARD }>Dashboard</NavItem> : null }
 				{ authenticated ? <NavItem link={ `${routes.AUTH_PORTAL}/sign-out` }>Sign out</NavItem> : null }
@@ -26,8 +23,8 @@ Navigation.propTypes = {
 };
 
 const NavItem = props => (
-	<li>
-		<Link to={ props.link }>{ props.children }</Link>
+	<li className="nav-item">
+		<Link className="nav-link" to={ props.link }>{ props.children }</Link>
 	</li>
 );
 

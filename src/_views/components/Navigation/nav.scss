@@ -1,0 +1,22 @@
+.main-nav .nav-list {
+  list-style: none;
+  display:    flex;
+
+  & .nav-item {
+    list-style-type: none;
+
+    & .nav-link {
+      display:         block;
+      padding:         15px;
+      color:           rgba(0, 0, 0, 0.5);
+      text-decoration: none;
+      font-weight:     bold;
+      transition:      all 0.2s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 3px 1px rgba(0, 0, 0, 0.3);
+        color:      rgba(0, 0, 0, 0.8);
+      }
+    }
+  }
+}

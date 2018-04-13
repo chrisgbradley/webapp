@@ -6,7 +6,6 @@ import WidgetBuilderLayout from "../WidgetBuilderLayout";
 function WidgetEditor ( { BuilderForm, widget, handleSubmit, handleClose } ) {
 	return (
 		<div>
-			<h2>Widget Editor</h2>
 			<WidgetBuilderLayout
 				handleClose={ handleClose }
 				widgetId={ widget.widgetId }

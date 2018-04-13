@@ -1,0 +1,26 @@
+%control {
+  padding-bottom: 10px;
+  display:        inline-flex;
+  align-items:    center;
+  font-size:      18px;
+  transition:     all 0.2s ease-in-out;
+  color:          rgba(0, 0, 0, 0.4);
+
+  &:hover {
+    color:  rgba(0, 0, 0, 0.8);
+    cursor: pointer;
+  }
+}
+
+.w-dash-controls {
+
+  & .left-control {
+    @extend %control;
+    float: left;
+  }
+
+  & .right-control {
+    @extend %control;
+    float: right;
+  }
+}

@@ -1,0 +1,41 @@
+@import './shared',
+'./reset',
+'./utils';
+@import url('https://fonts.googleapis.com/css?family=Montserrat|Raleway');
+
+html {
+  font-family: $base-font-family;
+}
+
+html, body, #root {
+  height: 100%;
+}
+
+#root {
+  display:        flex;
+  flex-direction: column;
+}
+
+#app-header {
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+#app-content {
+  flex: 1 0 auto;
+}
+
+#app-footer {
+  color:      rgba(0, 0, 0, 0.5);
+  padding:    10px 0;
+  margin-top: 20px;
+  border-top: 1px solid rgba(0, 0, 0, 0.2);
+  //box-shadow: 0 -2px 2px 1px rgba(0, 0, 0, 0.2);
+}
+
+.container {
+  position:  relative;
+  max-width: 960px;
+  margin:    0 auto;
+}

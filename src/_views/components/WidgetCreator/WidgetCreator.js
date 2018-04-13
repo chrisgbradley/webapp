@@ -1,7 +1,7 @@
-import React, { Component } from "react";
+import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 
-import WidgetPicker from "../WidgetPicker";
+import WidgetSelection from "../WidgetSelection";
 import WidgetBuilderLayout from "../WidgetBuilderLayout";
 
 
@@ -26,8 +26,10 @@ class WidgetCreator extends Component {
 		id: widget.uniqueId,
 		card: widget.card
 	} ) );
-	handleSelectionMade ( event ) {
-		const widget = this.props.getWidget( event.target.id );
+
+	handleSelectionMade ( widgetId ) {
+		const widget = this.props.getWidget( widgetId );
+		console.log( "clicked " + widgetId );
 		return this.setState( { selection: widget } );
 	}
 
@@ -37,7 +39,7 @@ class WidgetCreator extends Component {
 
 	render () {
 		return (
-			<div>
+			<Fragment>
 				{ this.state.selection ?
 					<WidgetBuilderLayout
 						handleBackToSelection={ this.handleBackToSelection.bind( this ) }
@@ -47,12 +49,12 @@ class WidgetCreator extends Component {
 						handleSubmit={ this.props.handleSubmit }
 					/>
 					:
-					<WidgetPicker
+					<WidgetSelection
 						handleWidgetClicked={ this.handleSelectionMade.bind( this ) }
 						handleClose={ this.props.handleClose }
 						widgetOptions={ this.widgetOptions }/>
 				}
-			</div>
+			</Fragment>
 		);
 	}
 }

@@ -1,12 +1,9 @@
-.Modal {
+.modal {
 	position:         absolute;
 	z-index:          500;
-	background-color: white;
-	padding:          16px;
-	left:             0;
 	top:              0;
+	left:             0;
 	right:            0;
 	bottom:           0;
-	box-sizing:       border-box;
-	transition:       all 0.3s ease-out;
-}
+	overflow:         hidden;
+	background-color: white; }

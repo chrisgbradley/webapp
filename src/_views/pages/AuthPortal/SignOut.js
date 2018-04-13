@@ -5,6 +5,7 @@ import { authActions } from "../../../_helpers/auth";
 class SignOut extends React.Component {
 	componentWillMount () {
 		this.props.signOut();
+		this.props.history.push( "/" );
 	}
 
 	render () {

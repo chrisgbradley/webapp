@@ -2,7 +2,7 @@ import React from "react";
 
 const HelloWorld = ( { title, data } ) => (
 	<div>
-		<h6>{ title }</h6>
+		<p>{ title }</p>
 		<p>{ data.extraMessage }</p>
 	</div>
 );

@@ -10,3 +10,37 @@
 .text {
   line-height: 1.5;
 }
+
+.feature-list {
+  list-style-type: circle;
+  margin-left:     20px;
+  margin-top:      10px;
+
+  li {
+    margin-bottom: 10px;
+  }
+
+  & > .feature {
+    font-weight: bold;
+  }
+
+  .sub-feature-list {
+    list-style-type: disc;
+    margin-top:      10px;
+    margin-left:     20px;
+
+    & > .sub-feature {
+      font-weight: normal;
+    }
+  }
+}
+
+.external-link {
+  color:           rgba(0, 0, 0, 0.4);
+  text-decoration: none;
+  transition:      color 0.2s ease-in-out;
+
+  &:hover {
+    color: rgba(0, 0, 0, 0.8);
+  }
+}

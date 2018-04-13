@@ -38,4 +38,14 @@ html, body, #root {
   position:  relative;
   max-width: 960px;
   margin:    0 auto;
+
+  @include for-tablet-landscape-up {
+    width: 85%;
+  }
+  @include for-tablet-portrait-up {
+    width: 90%;
+  }
+  @include for-phone-only {
+    width: 95%;
+  }
 }

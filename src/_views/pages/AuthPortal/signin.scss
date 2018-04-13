@@ -1,0 +1,12 @@
+.sign-in {
+  border:        1px solid rgba(0, 0, 0, 0.2);
+  margin:        20px;
+  padding:       10px 20px;
+  border-radius: 5px;
+  transition:    all 0.2s ease-in-out;
+
+  &:hover {
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    cursor: pointer;
+  }
+}
